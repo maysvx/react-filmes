@@ -11,44 +11,33 @@ function FilmesCartaz() {
 
     useEffect(() => {
 
-        apiFilmes.get('movie/upcoming?language=pt-BR').then(resultado =>{
+        apiFilmes.get('now_playing?language=pt-BR').then(resultado => {
             setFilmes(resultado.data.results)
         })
 
-    } , [])
+    }, [])
 
     return (
-      <div>
-          <h1>Filmes em cartaz</h1>
-          <br/>
+        <div className='cont'>
+            <h1>Filmes em cartaz</h1>
+            <br />
+            <Row>
+                {filmes.map(item => (
 
-          <Row>
-                {filmes.map(item =>(
+                    <Col md={3} className='mb-3'>
 
-                    <Col md= {3} className='mb-3'>
-
-                        <Card >
-                        <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
-                        <Card.Body>
-                            <Card.Title>{item.title}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted"> ({item.original_title})</Card.Subtitle>
-                            <Card.Text> {item.release_date}</Card.Text>
-                            <br/>
-                            <Link className="btn btn-danger" to={"/filmes/" + item.id}>Detalhes</Link>
-                        </Card.Body>
+                        <Card className="rounded shadow">
+                            <Link to={"/filmes/" + item.id}>
+                                <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500/" + item.poster_path} />
+                            </Link>
                         </Card>
-                    
+
                     </Col>
-                    
-                    
-                    ))
+                ))
                 }
             </Row>
-
-      </div>
+        </div>
     )
+}
 
-    
-  }
-  
-  export default FilmesCartaz;
+export default FilmesCartaz;
